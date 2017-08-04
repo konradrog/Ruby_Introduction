@@ -6,16 +6,12 @@ def star(n)
   print "*" * n
 end
 
-def odd_counter(n)
-    n/2+1
-end
-
 def ch_tree(level, width)
   k = 0
   l = level
   m = 1
   while m <= level
-    i = odd_counter(width) #liczba poziomów w jednym segmencie
+    i = width/2+1 #liczba poziomów w jednym segmencie, ilość liczb nieparzystych
     j = 1 #ilość gwiazdek na jednym poziomie
     while i + m-1 > 0
       empty(i+2*l+m)
