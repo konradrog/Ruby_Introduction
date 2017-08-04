@@ -1,4 +1,5 @@
 def empty(n)
+  
   print " " * n
 end
 
@@ -34,25 +35,25 @@ def ch_tree(level,width)
   l = level
   m = 1
   while m <= level
-    i = odd_counter(width)
-    j = 1
-    while i > 0
-      empty(i+l)
+    i = odd_counter(width) #liczba poziomów w jednym segmencie
+    j = 1 #ilość gwiazdek na jednym poziomie
+    while i + m-1 > 0
+      empty(i+2*l+m)
       star(j+k)
-      empty(i+l)
       puts
       i -= 1
       j += 2
     end
-    k += 2
-    l -= 1
-    m += 1
+    k += 2 #szerokość  wierzchołka w zależnosci od liczby segmentów
+    l -= 1 #ilość pustych miejsc na jednym poziomie
+    m += 1 #ilość segmentów
   end
-  empty(width/2 + 2 + level-1)
+  empty(width/2+2+2*level)
   star(1)
   puts
 end
 
-puts "Define (insert 2 parameters) number of levels, witdh of first level"
+puts "Define (insert 2 parameters) number of levels,\
+ witdh of first level(odd number)"
 
-ch_tree(3,5)
+ch_tree(4,5)
