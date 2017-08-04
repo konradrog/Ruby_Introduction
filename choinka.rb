@@ -30,10 +30,10 @@ end
 # end
 
 def ch_tree(level,width)
-  i = odd_counter(width)
   k = 0
   l = level
-  while k <= level
+  m = 1
+  while m <= level
     i = odd_counter(width)
     j = 1
     while i > 0
@@ -46,12 +46,13 @@ def ch_tree(level,width)
     end
     k += 2
     l -= 1
+    m += 1
   end
-  empty(width/2 + 1)
+  empty(width/2 + 2 + level-1)
   star(1)
   puts
 end
 
 puts "Define (insert 2 parameters) number of levels, witdh of first level"
 
-ch_tree(1,9)
+ch_tree(3,5)
