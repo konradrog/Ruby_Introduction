@@ -1,5 +1,4 @@
 def empty(n)
-  
   print " " * n
 end
 
@@ -54,6 +53,6 @@ def ch_tree(level,width)
 end
 
 puts "Define (insert 2 parameters) number of levels,\
- witdh of first level(odd number)"
+ witdh of the first level(odd number)"
 
-ch_tree(4,5)
+ch_tree(gets.to_i,gets.to_i)
