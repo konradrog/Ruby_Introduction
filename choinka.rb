@@ -7,29 +7,10 @@ def star(n)
 end
 
 def odd_counter(n)
-  counter = 0
-  (1..n).each do |el|
-    if el.odd?
-      counter += 1
-    end
-  end
-  counter
+    n/2+1
 end
 
-# def ch_tree(n) # funkcja dla jednego poziomu/segmentu
-#   i = odd_counter(n)
-#   j = 1
-#   while i > 0
-#     empty(i)
-#     star(j)
-#     empty(i)
-#     puts
-#     i -= 1
-#     j += 2
-#   end
-# end
-
-def ch_tree(level,width)
+def ch_tree(level, width)
   k = 0
   l = level
   m = 1
