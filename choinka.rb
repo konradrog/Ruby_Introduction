@@ -11,7 +11,7 @@ def ch_tree(level, width)
   l = level
   m = 1
   while m <= level
-    i = width/2+1 #liczba poziomów w jednym segmencie, ilość liczb nieparzystych
+    i = (width+1)/2 #liczba poziomów w jednym segmencie, ilość liczb nieparzystych
     j = 1 #ilość gwiazdek na jednym poziomie
     while i + m-1 > 0
       empty(i+2*l+m)
