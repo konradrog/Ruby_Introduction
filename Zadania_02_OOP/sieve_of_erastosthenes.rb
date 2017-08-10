@@ -7,7 +7,7 @@ class Erasto
     @board_final = []
   end
 
-  def doing_something
+  def calculate
     board_final = @board
 
     while board_final.has_value?(true)
@@ -28,8 +28,7 @@ class Erasto
   end
 end
 
-obliczenia = Erasto.new(1,50)
-puts obliczenia.board
-obliczenia.doing_something
-puts obliczenia.board
-print obliczenia.board_final #
+erasto = Erasto.new(ARGV[0].to_i, ARGV[1].to_i)
+erasto.calculate
+print "Prime numbers: #{erasto.board_final}" #
+puts
