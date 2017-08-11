@@ -1,14 +1,5 @@
-def convert(input)
-  temp = []
-  input.each do |el|
-    el = el.to_i
-    temp << el
-  end
-  temp
-end
-
 def bubble_sort(temp)
-  temp = convert(temp)
+  temp.map! {|el| el.to_i}
   temp.size.times do
     i = 0
     j = 1
