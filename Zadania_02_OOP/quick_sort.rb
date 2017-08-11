@@ -13,20 +13,14 @@ puts piwot
 print temp
 puts
 
-l = 0
 i = 1
 j = 0
-while l < (temp.size - 2)
+while i < (temp.size - 2)
   if  temp.at(i) < piwot
     temp[j], temp[i] = temp[i], temp[j]
-    i += 1
     j += 1
-  else
-    i += 1
   end
-  l += 1
-
-
+  i += 1
 end
 
 print temp
