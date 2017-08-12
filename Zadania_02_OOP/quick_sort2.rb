@@ -1,51 +1,25 @@
-input2 = [7, 6, 10, 1, 9]
-#result after first...
-#     = []
-####
-print input2[0]
-puts
-
-#comparator = input2.size - 1
-#puts comparator
-third = []
-third2 = []
-result = []
-def quick_sort(input_table,result)
-  first_step = compare(input_table)
-  result << first_step
-  second_step = divide_table(first_step)
-  if second_step[0].size > 1 || second_step[1].size > 1
-    third = quick_sort(second_step[0], result)
-    third2 = quick_sort(second_step[1], result)
+def quick_sort(input_table, first_index, last_index)
+  if first_index < last_index
+    pivot_index = compare(input_table, first_index, last_index)
+    quick_sort(input_table, first_index, pivot_index - 1)
+    quick_sort(input_table, pivot_index + 1, last_index)
   end
-  return [result]
+  input_table
 end
 
-def divide_table(input)
-  #if input.size > 1
-    divider = input.size / 2
-    last_element = input.size - 1
-    input1 = input[0..divider - 1]
-    input2 = input[divider..last_element]
-    return [input1, input2]
-  #end
-end
-
-def compare(input2)
-  input = input2
-  comparator = input.size - 1
-  i = 0
-  j = 0
+def compare(input, first_index, comparator)
+  i = first_index
+  current_index = first_index
   while i < comparator
     if  input[i] <= input[comparator]
-      input[i], input[j] = input[j], input[i]
-      j += 1
-
+      input[i], input[current_index] = input[current_index], input[i]
+      current_index += 1
     end
     i += 1
   end
-  input
+  input[comparator], input[current_index] = input[current_index], input[comparator]
+  current_index
 end
-require "pp"
-pp quick_sort(input2,result)
-print divide_table(input2)
+
+result = quick_sort(ARGV, 0, ARGV.size - 1)
+print result.map! {|e| e.to_i}
