@@ -1,15 +1,17 @@
-def avg_array(first_array, second_array)
-  # if first_array.size != second_array.size
-  #   puts "Arrays are not the same size"
-  #   break
-  # end
-
+def avg_array(*arrays)
   mean = []
   counter = 0
-  while counter < first_array.size
-    sum = first_array[counter] + second_array[counter]
-    mean << sum / 2
+  counter2 = 0
+  puts size = arrays.size
+  size_of_single = arrays[0].size
+  while counter < size_of_single
+    sum = 0.0
+    arrays.each do |el|
+      sum += el[counter2]
+    end
+    mean << sum / size
     counter += 1
+    counter2 += 1
   end
   print mean
   puts
