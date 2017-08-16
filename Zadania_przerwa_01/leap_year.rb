@@ -7,6 +7,6 @@ def leap_year?(year)
 end
 
 
-leap_year?(2004) #=> true
-leap_year?(2000) #=> true
-leap_year?(2100) #=> false
+# leap_year?(2004) #=> true
+# leap_year?(2000) #=> true
+# leap_year?(2100) #=> false

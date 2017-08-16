@@ -11,4 +11,4 @@ def vovel_count(input_string)
   counter
 end
 
-puts vovel_count("Alamlame")
+puts vovel_count("Jan Zieliński")
