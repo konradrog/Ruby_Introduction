@@ -13,7 +13,6 @@ class Point
   end
 end
 
-
 class Board
   #include ObjectSpace
   attr_accessor :proper_board
@@ -24,20 +23,22 @@ class Board
     #   "F" => [], "G" => [], "H" => [], "I" => [], "J" => []}
     # @proper_board.each_value do |v|
     #   10.times do
-    #     v << " "
+    #     v <<
     #   end
-    #end
+    # end
     @proper_board = create_new_board
   end
 
   def create_new_board
-    result = []
+    result = {
+      "A" => [],"B" => [], "C" => [], "D" => [], "E" => [],
+      "F" => [], "G" => [], "H" => [], "I" => [], "J" => []}
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
     i = 0
     while i < 10
       j = 1
       10.times do
-        result << Point.new([letters[i], (j).to_s])
+        result[letters[i]] << Point.new([letters[i], (j).to_s])
         j += 1
       end
       i += 1
@@ -49,8 +50,8 @@ class Board
     first_row
     puts
     divider
-    #draw_game_board(proper_board)
-    draw_game_board2(proper_board)
+    draw_game_board(proper_board)
+    #draw_game_board2(proper_board)
     puts
   end
 
@@ -73,15 +74,20 @@ class Board
     puts
   end
   def draw_game_board2(proper_board)
-    i = 1
-    while i <= 10
-      if i != 10
+    i = 0
+    j = 10
+    proper_board.each do |el|
+      if i % 10 == 1
         print "| #{i} "
       else
-        print "| #{i}"
       end
-      puts proper_board[i].
-      i += 10
+      case el
+      when el.empty && el.selected
+        print "|   "
+      end
+
+      i += 1
+
 
     end
   end
@@ -89,7 +95,7 @@ class Board
 
   def draw_game_board(proper_board)
     i = 1
-    proper_board.each do |v|
+    proper_board.each_value do |v|
       if i != 10
         print "| #{i} "
       else
@@ -97,7 +103,10 @@ class Board
       end
 
       v.each do |el|
-        print "| #{el} "
+        case 
+        when el.status[0] && !el.status[1]
+          print "|   "
+        end
       end
       print "|"
       puts
@@ -144,7 +153,11 @@ class Ship < Point
 end
 require "pp"
 board = Board.new
-pp board.proper_board
+# board.proper_board.each do |el|
+#   puts el.status
+#
+
+
 board.draw_board
 
 #board.create_new_board
