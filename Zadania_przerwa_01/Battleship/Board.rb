@@ -8,7 +8,7 @@ class Point
     @selected = false
     @busy = false
     @shot_down = false
-    @status = [@empty, @selected, @busy, @shout_down]
+    @status = [@empty, @selected, @busy, @shot_down]
     @position = [position[0],position[1]]
   end
 end
@@ -37,7 +37,7 @@ class Board
     while i < 10
       j = 1
       10.times do
-        result << Point.new([letters[i], (i + 1).to_s])
+        result << Point.new([letters[i], (j).to_s])
         j += 1
       end
       i += 1
@@ -142,9 +142,10 @@ class Ship < Point
 
 
 end
+require "pp"
 board = Board.new
-board.proper_board
-#board.draw_board
+pp board.proper_board
+board.draw_board
 
 #board.create_new_board
 #Ship.new(1).build_ship(1)
