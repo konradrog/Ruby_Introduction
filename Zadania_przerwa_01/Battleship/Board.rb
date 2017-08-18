@@ -1,7 +1,7 @@
 
 
 class Point
-  attr_accessor :empty, :selected, :busy, :shot_down, :status
+  attr_accessor :empty, :selected, :busy, :shot_down, :status, :position
 
   def initialize(position)
     @empty = true
@@ -14,21 +14,11 @@ class Point
 end
 
 class Board
-  #include ObjectSpace
   attr_accessor :proper_board
 
   def initialize
-    # @proper_board = {
-    #   "A" => [],"B" => [], "C" => [], "D" => [], "E" => [],
-    #   "F" => [], "G" => [], "H" => [], "I" => [], "J" => []}
-    # @proper_board.each_value do |v|
-    #   10.times do
-    #     v <<
-    #   end
-    # end
     @proper_board = create_new_board
   end
-
   def create_new_board
     result = {
       "A" => [],"B" => [], "C" => [], "D" => [], "E" => [],
@@ -51,7 +41,6 @@ class Board
     puts
     divider
     draw_game_board(proper_board)
-    #draw_game_board2(proper_board)
     puts
   end
 
@@ -73,39 +62,24 @@ class Board
     print "+"
     puts
   end
-  def draw_game_board2(proper_board)
-    i = 0
-    j = 10
-    proper_board.each do |el|
-      if i % 10 == 1
-        print "| #{i} "
-      else
-      end
-      case el
-      when el.empty && el.selected
-        print "|   "
-      end
-
-      i += 1
-
-
-    end
-  end
 
 
   def draw_game_board(proper_board)
     i = 1
-    proper_board.each_value do |v|
+    10.times do
       if i != 10
         print "| #{i} "
       else
         print "| #{i}"
       end
-
-      v.each do |el|
-        case 
-        when el.status[0] && !el.status[1]
+      proper_board.each_value do |el|
+        case
+        when el[i-1].empty && !el[i-1].selected
           print "|   "
+        when el[i-1].empty && el[i-1].selected
+          print "| . "
+        when el[i-1].shot_down
+          print "| X "
         end
       end
       print "|"
@@ -113,8 +87,8 @@ class Board
       divider
       i +=1
     end
-  end
 
+  end
   def read_input(input)
     useful_input = []
     useful_input << input[0]
@@ -126,10 +100,9 @@ class Board
     end
     useful_input
   end
-
 end
 
-class Ship < Point
+class Ship
   attr_accessor :size, :deck, :ship_area
 
   def initialize(size)
@@ -144,21 +117,104 @@ class Ship < Point
   end
 
 
-  def build_ship(size)
-    random_position
-
+  def build_ship(proper_board)
+    #loop do
+      rp = random_position
+      print rp
+      area = build_area(rp, proper_board)
+      area.each do |el|
+        if el.empty
+          el.selected = true
+        end
+      end
+    #end
+    # proper_board.each_value do |v|
+    #   v.each do |el|
+    #     if el
+    #   end
+    # end
   end
 
+  def build_area(position, board)
+    letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+    key_value = letters.index(position[0])
+    #puts "key: #{key_value}"
+    result = []
 
+    left = letters[key_value - 1]
+    mid = letters[key_value]
+    right = letters[key_value + 1]
+    print "l: #{left} m: #{mid} r: #{right}"
+    puts
+    position[1] = position[1] - 1
+
+
+    if position[1] == 0
+      if mid == "A"
+        result << mid3 = board[mid][position[1] + 1]
+        result << right2 = board[right][position[1]]
+        result << right3 = board[right][position[1] + 1]
+      elsif mid == "J"
+        result << left2 = board[left][position[1]]
+        result << left3 = board[left][position[1] + 1]
+        result << mid3 = board[mid][position[1] + 1]
+      else
+        result << left2 = board[left][position[1]]
+        result << left3 = board[left][position[1] + 1]
+        result << mid3 = board[mid][position[1] + 1]
+        result << right2 = board[right][position[1]]
+        result << right3 = board[right][position[1] + 1]
+      end
+    elsif position[1] == 9
+      if mid == "A"
+        result << mid1 = board[mid][position[1] - 1]
+        result << right1 = board[right][position[1] - 1]
+        result << right2 = board[right][position[1]]
+      elsif mid == "J"
+        result << left1 = board[left][position[1] - 1]
+        result << left2 = board[left][position[1]]
+        result << mid1 = board[mid][position[1] - 1]
+      else
+        result << left1 = board[left][position[1] - 1]
+        result << left2 = board[left][position[1]]
+        result << mid1 = board[mid][position[1] - 1]
+        result << right1 = board[right][position[1] - 1]
+        result << right2 = board[right][position[1]]
+      end
+    elsif mid == "A"
+      result << mid1 = board[mid][position[1] - 1]
+      result << mid3 = board[mid][position[1] + 1]
+      result << right1 = board[right][position[1] - 1]
+      result << right2 = board[right][position[1]]
+      result << right3 = board[right][position[1] + 1]
+    elsif mid == "J"
+      result << left1 = board[left][position[1] - 1]
+      result << left2 = board[left][position[1]]
+      result << left3 = board[left][position[1] + 1]
+      result << mid1 = board[mid][position[1] - 1]
+      result << mid3 = board[mid][position[1] + 1]
+    else
+      result << left1 = board[left][position[1] - 1]
+      result << left2 = board[left][position[1]]
+      result << left3 = board[left][position[1] + 1]
+      result << mid1 = board[mid][position[1] - 1]
+      result << mid3 = board[mid][position[1] + 1]
+      result << right1 = board[right][position[1] - 1]
+      result << right2 = board[right][position[1]]
+      result << right3 = board[right][position[1] + 1]
+    end
+
+
+    result
+  end
 end
+
+
 require "pp"
 board = Board.new
-# board.proper_board.each do |el|
-#   puts el.status
-#
-
-
 board.draw_board
-
-#board.create_new_board
-#Ship.new(1).build_ship(1)
+#puts board.proper_board["B"]
+ship = Ship.new(1)
+ship.build_ship(board.proper_board)
+board.draw_board
+puts board.proper_board["A"][1].position
