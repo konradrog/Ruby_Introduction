@@ -1,14 +1,16 @@
 
 
 class Point
-  attr_accessor :empty, :selected, :busy, :shot_down, :status, :position
+  attr_accessor :empty, :selected, :busy, :shot_down, :ship_ship, :ship_area, :position
 
   def initialize(position)
     @empty = true
     @selected = false
     @busy = false
     @shot_down = false
-    @status = [@empty, @selected, @busy, @shot_down]
+    @ship_ship = false
+    @ship_area = false
+    #@status = [@empty, @selected, @busy, @shot_down]
     @position = [position[0],position[1]]
   end
 end
@@ -74,12 +76,19 @@ class Board
       end
       proper_board.each_value do |el|
         case
+        when el[i-1].busy && el[i-1].ship_ship
+          print "| - "
+        when el[i-1].ship_area
+          print "| * "
+        when el[i-1].ship_ship
+          print "| - "
         when el[i-1].empty && !el[i-1].selected
           print "|   "
         when el[i-1].empty && el[i-1].selected
           print "| . "
-        when el[i-1].shot_down
-          print "| X "
+
+        when el[i-1].busy
+          print "| * "
         end
       end
       print "|"
@@ -113,26 +122,40 @@ class Ship
 
   def random_position
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-    position = [letters[rand(9)], rand(1..10)]
+    position = [letters[rand(9)], rand(0..9)]
   end
 
 
   def build_ship(proper_board)
-    #loop do
+    rp = random_position
+    while proper_board[rp[0]][rp[1]].ship_ship || proper_board[rp[0]][rp[1]].ship_area
       rp = random_position
-      print rp
-      area = build_area(rp, proper_board)
-      area.each do |el|
-        if el.empty
-          el.selected = true
-        end
-      end
-    #end
-    # proper_board.each_value do |v|
-    #   v.each do |el|
-    #     if el
+    end
+    area = build_area(rp, proper_board)
+    area.each { |el| el.ship_area = true }
+    proper_board[rp[0]][rp[1]].ship_ship = true
+
+    # while !proper_board[rp[0]][rp[1]].busy
+    #   area = build_area(rp, proper_board)
+    #   area.each do |el|
+    #     if !el.busy && !el.ship_area
+    #       el.busy = true
+    #       #el.ship_area = true
+    #     else
+    #       area.each { |e| e.busy = false}
+    #       rp = random_position
+    #       puts "next would be #{rp}"
+    #       next
+    #       #puts "second #{rp}"
+    #       #build_ship(proper_board)
+    #     end
+    #
+    #
+    #     # proper_board[rp[0]][rp[1]].ship_ship = true
     #   end
+    #   proper_board[rp[0]][rp[1]].busy = true
     # end
+    # puts "end #{rp}"
   end
 
   def build_area(position, board)
@@ -146,7 +169,7 @@ class Ship
     right = letters[key_value + 1]
     print "l: #{left} m: #{mid} r: #{right}"
     puts
-    position[1] = position[1] - 1
+
 
 
     if position[1] == 0
@@ -203,8 +226,6 @@ class Ship
       result << right2 = board[right][position[1]]
       result << right3 = board[right][position[1] + 1]
     end
-
-
     result
   end
 end
@@ -215,6 +236,14 @@ board = Board.new
 board.draw_board
 #puts board.proper_board["B"]
 ship = Ship.new(1)
+ship2 = Ship.new(1)
+ship3 = Ship.new(1)
+ship4 = Ship.new(1)
 ship.build_ship(board.proper_board)
+#board.draw_board
+ship2.build_ship(board.proper_board)
+#board.draw_board
+ship3.build_ship(board.proper_board)
+#board.draw_board
+ship4.build_ship(board.proper_board)
 board.draw_board
-puts board.proper_board["A"][1].position
