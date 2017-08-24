@@ -1,19 +1,9 @@
 def word_count(input_string)
   input_string = input_string.downcase!.split(" ")
-  counter = 0
-  amount = 0
-  result = {}
-  while counter < input_string.size
-    input_string.each do |el|
-      if el == input_string[counter]
-        amount += 1
-      end
-    end
-    result.store(input_string[counter], amount)
-    counter += 1
-    amount = 0
+  result = input_string.group_by do |word|
+    word
   end
-  result
+  result.transform_values { |v| v.size }
 end
 
 puts word_count('foo Foo bar bar Bar')
