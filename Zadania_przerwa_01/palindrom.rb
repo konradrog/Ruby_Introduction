@@ -1,10 +1,7 @@
 def palindrome?(input_string)
   input_string = input_string.split(" ").join.downcase
-  if input_string == input_string.reverse
-    true
-  else
-    false
-  end
+  input_string == input_string.reverse
+
 end
 
 puts palindrome?('Kobyła ma mały bok') #=> true
