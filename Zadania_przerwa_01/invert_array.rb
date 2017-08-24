@@ -1,8 +1,10 @@
 def invert_array(array)
-  print array.map! {|el| el * (-1)}
-  puts
+  array.map {|el| el * (-1)}
 end
 
-invert_array([1, 2, 3, 4, 5])
-invert_array([1, -2, 3, -4, 5])
-invert_array([0])
+print invert_array([1, 2, 3, 4, 5])
+puts
+print invert_array([1, -2, 3, -4, 5])
+puts
+print invert_array([0])
+puts
