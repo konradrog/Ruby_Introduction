@@ -1,7 +1,7 @@
 def to_roman(input_number)
   temp = []
   counter = 0
-  symbols = [["I", "V",  "X"], ["X", "L", "C"], ["C", "D", "M"]]
+  symbols = [["I", "V",  "X"], ["X", "L", "C"], ["C", "D", "M"], ["M", "D"]]
   result = ""
   input_number = input_number.to_s.reverse
   while counter < input_number.size
@@ -28,10 +28,10 @@ def to_roman(input_number)
     counter += 1
   end
 
-  puts result.reverse
+  result.reverse
 end
 
-to_roman(5)
-#=> 'V'
-to_roman(37) #=> 'XXXVII'
-to_roman(924) #=> 'CMXXIV'
+puts to_roman(5)#=> 'V'
+puts to_roman(37) #=> 'XXXVII'
+puts to_roman(924) #=> 'CMXXIV'
+puts to_roman(2999)
