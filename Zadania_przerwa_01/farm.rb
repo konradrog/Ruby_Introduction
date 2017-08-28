@@ -35,10 +35,8 @@ class Farm
   end
 
   def give_sounds
-    i = 0
-    while i < animals.size
-      animals[i].give_sound
-      i += 1
+    animals.each do |animal|
+      animal.give_sound
     end
   end
 end
